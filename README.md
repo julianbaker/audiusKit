@@ -2,7 +2,9 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A modern Swift package for integrating Audius music content into your iOS, macOS, tvOS, or watchOS app. AudiusKit provides a type-safe, async/await-based read-only API for accessing and streaming public Audius tracks, user profiles, and playlists.
+A modern Swift package for integrating Audius music content into your iOS, macOS, tvOS, or watchOS app. 
+
+**AudiusKit is a 3rd party, community-maintained library.** It provides a type-safe, async/await-based read-only API for accessing and streaming public Audius tracks, user profiles, and playlists.
 
 ---
 
