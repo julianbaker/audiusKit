@@ -1,0 +1,3 @@
+[submodule "documentation/dev-docs"]
+	path = documentation/dev-docs
+	url = https://github.com/julianbaker/dev-docs.git
