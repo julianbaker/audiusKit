@@ -253,7 +253,7 @@ let streamUrl = try await track.fetchPlayableStreamURL()
 
 Popular genre strings for filtering:
 - "Electronic"
-- "Hip-Hop"
+- "Hip-Hop/Rap"
 - "Alternative"
 - "Pop"
 - "Ambient"
