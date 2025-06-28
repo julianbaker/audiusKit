@@ -65,6 +65,9 @@ func fetchUserProfile(userId: String, forceRefresh: Bool = false) async throws -
 // Fetch user's tracks (paginated)
 func fetchUserTracks(userId: String, offset: Int = 0, limit: Int = 20, forceRefresh: Bool = false) async throws -> [Track]
 
+// Search for users
+func searchUsers(query: String, limit: Int = 20) async throws -> [Track.User]
+
 // Fetch user's tracks (legacy, all at once)
 func fetchUserTracks(userId: String, forceRefresh: Bool = false) async throws -> [Track] // Legacy
 
@@ -329,3 +332,13 @@ func stopPlaying(_ track: Track) {
 ## ⚠️ Network Requirements
 
 Most methods in AudiusAPIClient require an active internet connection to communicate with the Audius API. If the network is unavailable, these methods will throw a networkError. For offline/local development, use the mock implementations provided in AudiusAPIClientProtocol.
+
+#### searchUsers
+Search for users by display name, handle, or other metadata.
+
+```swift
+func searchUsers(query: String, limit: Int = 20) async throws -> [Track.User]
+```
+- `query`: The search string (name, handle, etc.)
+- `limit`: Maximum number of results to return (default: 20)
+- **Returns:** An array of `Track.User` objects matching the query.

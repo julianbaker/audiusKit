@@ -3,7 +3,6 @@
 ## Documentation Index
 - [Getting Started](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Getting-Started.md)
 - [API Reference](https://github.com/julianbaker/AudiusKit/blob/main/documentation/API-Reference.md)
-- [AppIntents Reference](https://github.com/julianbaker/AudiusKit/blob/main/documentation/AppIntents.md)
 - [Usage Guide](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Usage-Guide.md)
 - [Troubleshooting (this file)](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Troubleshooting.md)
 - [Architecture](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Architecture.md)
@@ -46,45 +45,6 @@
 
 ---
 
-## AppIntents Issues
-
-### Intents Not Appearing in Shortcuts
-- **Symptom:** AudiusKit intents do not show up in the Shortcuts app.
-- **Solution:**
-  - Ensure `AudiusKitIntentsPackage` is registered in your app's `AppIntentsPackage.includedPackages`.
-  - Rebuild and reinstall your app.
-  - Wait a few minutes for system indexing.
-  - Check your deployment target (iOS 16+, macOS 13+).
-
-### Voice Commands Not Working
-- **Symptom:** Siri does not recognize or execute AudiusKit voice commands.
-- **Solution:**
-  - Grant "Siri & Search" permission in device settings.
-  - Use the exact app name in your command.
-  - Try alternative supported phrases.
-  - Test on a physical device (not just Simulator).
-
-### Shortcuts Not Syncing to Apple Watch
-- **Symptom:** Shortcuts work on iPhone but not on Watch.
-- **Solution:**
-  - Ensure Shortcuts app is installed and synced on Watch.
-  - Wait for automatic sync or force sync by opening Shortcuts on Watch.
-
-### Parameter/Genre Issues
-- **Symptom:** Voice command or shortcut fails for a specific genre or parameter.
-- **Solution:**
-  - Use only supported genre names (see API Reference).
-  - Try a different time range or limit.
-
-### Testing Issues
-- **Symptom:** Unit tests fail or cannot mock API.
-- **Solution:**
-  - Use the provided mock API client for tests.
-  - Register dependencies using `AppDependencyManager`.
-  - Ensure test environment matches platform requirements.
-
----
-
 ## Platform Requirements
 - **iOS:** 16.0+
 - **macOS:** 13.0+
@@ -113,6 +73,5 @@
 
 ## See Also
 - [API Reference](https://github.com/julianbaker/AudiusKit/blob/main/documentation/API-Reference.md)
-- [AppIntents Reference](https://github.com/julianbaker/AudiusKit/blob/main/documentation/AppIntents.md)
 - [Usage Guide](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Usage-Guide.md)
 - [Architecture](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Architecture.md) 

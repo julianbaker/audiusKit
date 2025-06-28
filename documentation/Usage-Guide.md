@@ -3,7 +3,6 @@
 ## Documentation Index
 - [Getting Started](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Getting-Started.md)
 - [API Reference](https://github.com/julianbaker/AudiusKit/blob/main/documentation/API-Reference.md)
-- [AppIntents Reference](https://github.com/julianbaker/AudiusKit/blob/main/documentation/AppIntents.md)
 - [Usage Guide (this file)](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Usage-Guide.md)
 - [Troubleshooting](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Troubleshooting.md)
 - [Architecture](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Architecture.md)
@@ -350,7 +349,6 @@ Trigger `loadMoreTrendingTracks()` as the user scrolls to the bottom of your lis
 
 ## See Also
 - [API Reference](https://github.com/julianbaker/AudiusKit/blob/main/documentation/API-Reference.md)
-- [AppIntents Reference](https://github.com/julianbaker/AudiusKit/blob/main/documentation/AppIntents.md)
 - [Troubleshooting](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Troubleshooting.md)
 - [Architecture](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Architecture.md)
 

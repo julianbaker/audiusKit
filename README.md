@@ -16,6 +16,7 @@ A modern Swift package for integrating Audius music content into your iOS, macOS
 - Robust error handling and caching
 - Designed for performance and thread safety
 - Supports iOS, macOS, tvOS, and watchOS
+- **Search for users and tracks by name or handle**
 
 ---
 
@@ -83,6 +84,16 @@ class AppState: ObservableObject {
                 await MainActor.run { self?.initializationError = error }
             }
         }
+    }
+}
+
+// Example: Search for users
+func searchUsers(query: String) async {
+    do {
+        let users = try await AudiusAPIClient.shared.searchUsers(query: query)
+        print("Found \(users.count) users")
+    } catch {
+        print("Error searching users: \(error)")
     }
 }
 ```
