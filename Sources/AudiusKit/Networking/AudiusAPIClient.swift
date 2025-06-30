@@ -8,6 +8,12 @@ public actor AudiusAPIClient {
 
   private static var instance: AudiusAPIClient?
   private static let instanceLock = NSLock()
+  private static var configuredAppName: String?
+
+  /// Call this before initialize() to set a custom app name for API attribution.
+  public static func configure(appName: String) {
+    configuredAppName = appName
+  }
 
   public static var shared: AudiusAPIClient {
     if let instance = instance {
@@ -18,7 +24,8 @@ public actor AudiusAPIClient {
     defer { instanceLock.unlock() }
 
     if instance == nil {
-      instance = AudiusAPIClient()
+      let appName = configuredAppName ?? "AudiusKit"
+      instance = AudiusAPIClient(appName: appName)
     }
     return instance!
   }
@@ -80,7 +87,7 @@ public actor AudiusAPIClient {
     let data: UserIdFromWallet
   }
 
-  private init(session: URLSession = .shared, appName: String = "AudiusSwiftClient") {
+  private init(session: URLSession = .shared, appName: String = "AudiusKit") {
     self.session = session
     self.decoder = JSONDecoder()
     self.decoder.dateDecodingStrategy = .iso8601

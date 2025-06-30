@@ -58,6 +58,10 @@ dependencies: [
 
 See [Getting Started](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Getting-Started.md) for a full guide.
 
+## Minimal Initialization Example
+
+Initialize AudiusKit early in your app's lifecycle (e.g., in your App struct or AppDelegate):
+
 ```swift
 import AudiusKit
 
@@ -78,6 +82,8 @@ class AppState: ObservableObject {
     init() {
         Task.detached(priority: .userInitiated) { [weak self] in
             do {
+                // (Optional) Set your app's name for API attribution. Fallback is 'AudiusKit'.
+                AudiusAPIClient.configure(appName: "MyCoolApp")
                 try await AudiusAPIClient.initialize()
                 await MainActor.run { self?.isInitialized = true }
             } catch {
@@ -86,17 +92,9 @@ class AppState: ObservableObject {
         }
     }
 }
-
-// Example: Search for users
-func searchUsers(query: String) async {
-    do {
-        let users = try await AudiusAPIClient.shared.searchUsers(query: query)
-        print("Found \(users.count) users")
-    } catch {
-        print("Error searching users: \(error)")
-    }
-}
 ```
+
+> **Note:** If you do not call `AudiusAPIClient.configure(appName:)`, the default app name sent to the API will be `"AudiusKit"`.
 
 ---
 
