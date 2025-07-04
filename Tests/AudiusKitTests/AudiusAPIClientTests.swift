@@ -398,7 +398,7 @@ final class AudiusAPIClientTests: XCTestCase {
     // Negative offset/limit: API may return first page or empty array depending on backend
     let negOffset = try await client.fetchTrendingTracks(offset: -5, limit: 5)
     // Accept both empty and non-empty results, but assert no crash
-    XCTAssertNotNil(negOffset)
+    XCTAssertGreaterThanOrEqual(negOffset.count, 0)
     let negLimit = try await client.fetchTrendingTracks(offset: 0, limit: -5)
     XCTAssertEqual(negLimit.count, 0)
     // Note: If API changes, update this test accordingly
@@ -508,7 +508,7 @@ final class AudiusAPIClientTests: XCTestCase {
     }
     // Negative offset/limit: API may return first page or empty array depending on backend
     let negOffset = try await client.fetchUserTracks(userId: userId, offset: -5, limit: 5)
-    XCTAssertNotNil(negOffset)
+    XCTAssertGreaterThanOrEqual(negOffset.count, 0)
     let negLimit = try await client.fetchUserTracks(userId: userId, offset: 0, limit: -5)
     XCTAssertEqual(negLimit.count, 0)
     // Note: If API changes, update this test accordingly
