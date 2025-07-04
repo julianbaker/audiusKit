@@ -1,6 +1,10 @@
 import Foundation
+#if canImport(Network)
 import Network
+#endif
+#if canImport(OSLog)
 import OSLog
+#endif
 
 /// A client for interacting with the Audius API
 public actor AudiusAPIClient {
@@ -717,13 +721,13 @@ public actor AudiusAPIClient {
     offset: Int = 0,
     limit: Int = 20,
     forceRefresh: Bool = false
-  ) async throws -> [Track] {
+  ) async throws -> [Playlist] {
     let safeOffset = max(0, offset)
     let safeLimit = max(0, limit)
     if safeLimit == 0 { return [] }
     let cacheKey = "playlists_\(userId)_\(safeOffset)_\(safeLimit)"
     if !forceRefresh {
-      if let cached: [Track] = await cacheManager.getCachedMetadata(forKey: cacheKey) {
+      if let cached: [Playlist] = await cacheManager.getCachedMetadata(forKey: cacheKey) {
         return cached
       }
     }
@@ -735,7 +739,7 @@ public actor AudiusAPIClient {
     ]
     let url = try await constructURL(path: "users/\(userId)/playlists", queryItems: queryItems)
     logger.debug("Requesting playlists from URL: \(url)")
-    let response: TracksResponse = try await fetch(url: url)
+    let response: PlaylistsResponse = try await fetch(url: url)
     await cacheManager.cacheMetadata(response.data, forKey: cacheKey)
     return response.data
   }

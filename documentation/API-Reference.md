@@ -87,7 +87,7 @@ func fetchSupporting(userId: String, offset: Int = 0, limit: Int = 20, forceRefr
 func fetchMutuals(userId: String, offset: Int = 0, limit: Int = 20, forceRefresh: Bool = false) async throws -> [Track.User]
 
 // Fetch playlists by user (paginated)
-func fetchUserPlaylists(userId: String, offset: Int = 0, limit: Int = 20, forceRefresh: Bool = false) async throws -> [Track]
+func fetchUserPlaylists(userId: String, offset: Int = 0, limit: Int = 20, forceRefresh: Bool = false) async throws -> [Playlist]
 
 // Fetch reposts by user (paginated)
 func fetchUserReposts(userId: String, offset: Int = 0, limit: Int = 20, forceRefresh: Bool = false) async throws -> [Track]

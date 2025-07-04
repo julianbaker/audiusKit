@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(SwiftUI)
 import SwiftUI
+#endif
 
 #if os(iOS) || os(tvOS) || os(visionOS)
   import UIKit
