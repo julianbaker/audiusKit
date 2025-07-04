@@ -342,7 +342,7 @@ Trigger `loadMoreTrendingTracks()` as the user scrolls to the bottom of your lis
 ## Testing & Network Requirements
 
 - Most tests in AudiusKitTests require a live network connection and access to the Audius API.
-- Tests in AudiusKitIntentsTests using MockAudiusAPIClient can be run offline and are suitable for verifying logic and pagination without network access.
+- Mock-based tests using `MockAudiusAPIClient` can be run offline and are suitable for verifying logic and pagination without network access.
 - For CI or local development without network, focus on mock-based tests.
 
 ---

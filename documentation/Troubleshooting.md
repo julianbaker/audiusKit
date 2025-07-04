@@ -57,15 +57,9 @@
 
 ## Debugging Tips
 - Use logs and breakpoints to inspect API responses and errors.
-- Use the provided validation methods:
-  ```swift
-  try AudiusKitIntentsPackage.validateConfiguration()
-  let status = AudiusKitIntentsPackage.getIntegrationStatus()
-  ```
 - Check for common error messages:
   - "No available hosts"
   - "Failed to decode response"
-  - "Intents not appearing"
   - "Network connection required"
 - If you encounter persistent issues, update AudiusKit to the latest version and consult the [Usage Guide](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Usage-Guide.md) or [API Reference](https://github.com/julianbaker/AudiusKit/blob/main/documentation/API-Reference.md).
 

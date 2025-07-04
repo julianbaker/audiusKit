@@ -32,7 +32,7 @@ AudiusKit is a Swift package for integrating Audius music content into your iOS,
    ```
    https://github.com/julianbaker/AudiusKit.git
    ```
-3. Select the latest version and add the `AudiusKit` (and `AudiusKitIntents` if needed) products to your target.
+3. Select the latest version and add the `AudiusKit` product to your target.
 
 ### Package.swift Example
 ```swift
