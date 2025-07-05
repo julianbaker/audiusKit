@@ -1,10 +1,6 @@
 import Foundation
-#if canImport(Network)
 import Network
-#endif
-#if canImport(OSLog)
 import OSLog
-#endif
 
 /// A client for interacting with the Audius API
 public actor AudiusAPIClient {
