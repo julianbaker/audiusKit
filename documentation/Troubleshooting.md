@@ -1,71 +1,51 @@
-# AudiusKit Troubleshooting Guide
+# Troubleshooting (v2)
 
-## Documentation Index
-- [Getting Started](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Getting-Started.md)
-- [API Reference](https://github.com/julianbaker/AudiusKit/blob/main/documentation/API-Reference.md)
-- [Usage Guide](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Usage-Guide.md)
-- [Troubleshooting (this file)](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Troubleshooting.md)
-- [Architecture](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Architecture.md)
+## `oauthStateMismatch`
 
----
+Cause: callback `state` does not match request `state`.
 
-## Core API Issues
+Fix:
 
-### Network Errors
-- **Symptom:** Requests fail, time out, or return no data.
-- **Solution:**
-  - Check your internet connection.
-  - Ensure the Audius API is reachable.
-  - Retry with a different network.
-  - Use `forceRefresh: true` if cached data is stale.
+- generate cryptographically random state per auth attempt
+- store it in-memory for the auth transaction
+- validate exact equality before token usage
 
-### Decoding Errors
-- **Symptom:** "Failed to decode response" or similar error.
-- **Solution:**
-  - The Audius API may have changed; update AudiusKit to the latest version.
-  - Report the issue with the failing endpoint and payload.
+## `tokenVerificationFailed`
 
-### Host/Service Unavailable
-- **Symptom:** "No available hosts" or "Host unavailable" errors.
-- **Solution:**
-  - Wait and retry; Audius hosts may be temporarily down.
-  - Check for service status updates from Audius.
+Cause: `/v1/users/verify_token` failed or returned an unexpected payload.
 
-### Cache Issues
-- **Symptom:** Data appears outdated or missing.
-- **Solution:**
-  - Use `forceRefresh: true` to bypass cache.
-  - Use cache management methods to clear or protect cache entries.
+Fix:
 
-### Error Handling
-- **Symptom:** Unhandled errors in UI.
-- **Solution:**
-  - Always handle errors in your UI and provide retry options.
-  - Use the provided `ErrorView` pattern for user-friendly error messages.
+- verify discovery host availability
+- confirm token was received from Audius callback
+- inspect response payload shape and status
 
----
+## `hostUnavailable`
 
-## Platform Requirements
-- **iOS:** 16.0+
-- **macOS:** 13.0+
-- **tvOS:** 16.0+
-- **watchOS:** 9.0+
-- **Swift:** 5.9+
-- **Xcode:** 15.0+
+Cause: discovery host lookup failed and no cached host was available.
 
----
+Fix:
 
-## Debugging Tips
-- Use logs and breakpoints to inspect API responses and errors.
-- Check for common error messages:
-  - "No available hosts"
-  - "Failed to decode response"
-  - "Network connection required"
-- If you encounter persistent issues, update AudiusKit to the latest version and consult the [Usage Guide](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Usage-Guide.md) or [API Reference](https://github.com/julianbaker/AudiusKit/blob/main/documentation/API-Reference.md).
+- check network availability
+- verify `discoveryURL` is reachable
+- retry request after transient failures
 
----
+## `unauthorized` on write endpoints
 
-## See Also
-- [API Reference](https://github.com/julianbaker/AudiusKit/blob/main/documentation/API-Reference.md)
-- [Usage Guide](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Usage-Guide.md)
-- [Architecture](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Architecture.md) 
+Cause: endpoint rejects current auth mode.
+
+Fix:
+
+- ensure session bearer token exists and is valid
+- verify operation auth requirement in `AudiusOperationRegistry`
+- provide a `WriteProxyExecutor` for endpoints requiring proxy behavior
+
+## Decode failures
+
+Cause: response body does not match expected decoder.
+
+Fix:
+
+- use `decodeJSON()` to inspect raw payload
+- update model decoder for schema changes in source swagger
+- regenerate operation/model layers when swagger changes

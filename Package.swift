@@ -23,6 +23,9 @@ let package = Package(
       dependencies: []),
     .testTarget(
       name: "AudiusKitTests",
-      dependencies: ["AudiusKit"]),
+      dependencies: ["AudiusKit"],
+      resources: [
+        .process("Fixtures/operation_manifest.json")
+      ]),
   ]
 )
