@@ -4,7 +4,7 @@
 require "json"
 require "yaml"
 
-DEFAULT_SWAGGER = "/Users/julianbaker/Downloads/swagger.yaml"
+DEFAULT_SWAGGER = ENV.fetch("AUDIUSKIT_SWAGGER_PATH", "swagger.yaml")
 DEFAULT_OUTPUT = "Tests/AudiusKitTests/Fixtures/operation_manifest.json"
 SUPPORTED_METHODS = %w[get post put delete].freeze
 
@@ -62,7 +62,7 @@ end
 operations.sort_by! { |op| [op["tag"], op["path"], op["method"], op["operationId"]] }
 
 manifest = {
-  "source_swagger" => swagger_path,
+  "source_swagger" => File.basename(swagger_path),
   "operation_count" => operations.count,
   "operations" => operations
 }

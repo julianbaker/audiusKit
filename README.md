@@ -2,7 +2,7 @@
 
 AudiusKit v2 is a typed Swift SDK for the Audius/Open Audio Protocol API, generated from:
 
-`/Users/julianbaker/Downloads/swagger.yaml`
+`swagger.yaml` (or a path you provide at generation time)
 
 ## Highlights
 
@@ -57,19 +57,19 @@ Use `AudiusClient(configuration:)` for all new code.
 Regenerate typed surface:
 
 ```bash
-ruby Scripts/generate_typed_surface.rb /Users/julianbaker/Downloads/swagger.yaml
+ruby Scripts/generate_typed_surface.rb ./swagger.yaml
 ```
 
 Regenerate operation manifest fixture:
 
 ```bash
-ruby Scripts/generate_operation_manifest.rb /Users/julianbaker/Downloads/swagger.yaml Tests/AudiusKitTests/Fixtures/operation_manifest.json
+ruby Scripts/generate_operation_manifest.rb ./swagger.yaml Tests/AudiusKitTests/Fixtures/operation_manifest.json
 ```
 
 Run codegen parity check:
 
 ```bash
-Scripts/check_codegen.sh /Users/julianbaker/Downloads/swagger.yaml
+Scripts/check_codegen.sh ./swagger.yaml
 ```
 
 ## Documentation

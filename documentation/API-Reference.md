@@ -2,7 +2,7 @@
 
 ## Coverage
 
-- Source swagger: `/Users/julianbaker/Downloads/swagger.yaml`
+- Source swagger: `swagger.yaml` (or your supplied OpenAPI path)
 - Raw operation registry: `Sources/AudiusKit/Generated/AudiusOperations.generated.swift`
 - Typed operation registry: `Sources/AudiusKit/Generated/AudiusTypedAPIs.generated.swift`
 - Coverage target: `157/157` operations

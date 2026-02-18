@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SWAGGER_PATH="${1:-/Users/julianbaker/Downloads/swagger.yaml}"
+SWAGGER_PATH="${1:-${AUDIUSKIT_SWAGGER_PATH:-swagger.yaml}}"
 FILES=(
   "Sources/AudiusKit/Generated/AudiusModels.generated.swift"
   "Sources/AudiusKit/Generated/AudiusTypedOperationParams.generated.swift"

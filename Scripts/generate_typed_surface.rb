@@ -4,7 +4,7 @@
 require "set"
 require "yaml"
 
-DEFAULT_SWAGGER = "/Users/julianbaker/Downloads/swagger.yaml"
+DEFAULT_SWAGGER = ENV.fetch("AUDIUSKIT_SWAGGER_PATH", "swagger.yaml")
 OPERATIONS_FILE = "Sources/AudiusKit/Generated/AudiusOperations.generated.swift"
 MODELS_OUTPUT = "Sources/AudiusKit/Generated/AudiusModels.generated.swift"
 PARAMS_OUTPUT = "Sources/AudiusKit/Generated/AudiusTypedOperationParams.generated.swift"
