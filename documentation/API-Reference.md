@@ -1,18 +1,52 @@
 # API Reference (v2)
 
-## Operation Coverage
+## Coverage
 
-AudiusKit v2 includes wrappers for all operations currently in the source swagger (`157`).
+- Source swagger: `/Users/julianbaker/Downloads/swagger.yaml`
+- Raw operation registry: `Sources/AudiusKit/Generated/AudiusOperations.generated.swift`
+- Typed operation registry: `Sources/AudiusKit/Generated/AudiusTypedAPIs.generated.swift`
+- Coverage target: `157/157` operations
 
-Source of truth:
+## Primary Entry Points
 
-- `/Users/julianbaker/Downloads/swagger.yaml`
+- `AudiusClient(configuration:)`
+- `client.typed.<tag>.<operation>(Params)` (typed-first)
+- `client.<tag>.<operation>(pathParameters/queryItems/headers/body)` (raw)
 
-Generated registry:
+## Typed Method Shape
 
-- `Sources/AudiusKit/Generated/AudiusOperations.generated.swift`
+```swift
+func getTrack(_ params: GetTrackParams) async throws -> AudiusEnvelope<Track>
+```
 
-## Coverage by Tag
+## Raw Method Shape
+
+```swift
+func getTrack(
+  pathParameters: [String: String] = [:],
+  queryItems: [URLQueryItem] = [],
+  headers: [String: String] = [:],
+  body: JSONValue? = nil
+) async throws -> AudiusHTTPResponse<Data>
+```
+
+## Typed Envelopes
+
+- `AudiusEnvelope<T>`
+- `AudiusListEnvelope<T>`
+- `AudiusOptionalEnvelope<T>`
+- `AudiusWriteEnvelope<T>`
+
+## Auth Requirement Mapping
+
+Auth requirements are declared per operation and mirrored in both registries:
+
+- `.none`
+- `.basic`
+- `.bearer`
+- `.basicOrBearer`
+
+## Typed Coverage by Tag
 
 - `users`: 56
 - `tracks`: 40
@@ -29,27 +63,3 @@ Generated registry:
 - `resolve`: 1
 - `explore`: 1
 - `tips`: 1
-
-## Operation Method Shape
-
-Every generated endpoint wrapper follows:
-
-```swift
-func operationName(
-  pathParameters: [String: String] = [:],
-  queryItems: [URLQueryItem] = [],
-  headers: [String: String] = [:],
-  body: JSONValue? = nil
-) async throws -> AudiusHTTPResponse<Data>
-```
-
-## Auth Requirement Mapping
-
-Auth requirements are tracked per operation in `AudiusOperationSpec.auth`:
-
-- `.none`
-- `.basic`
-- `.bearer`
-- `.basicOrBearer`
-
-Transport auth header resolution is handled by `AudiusCore`.

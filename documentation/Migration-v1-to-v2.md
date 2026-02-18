@@ -1,39 +1,36 @@
 # Migration Guide: v1 -> v2
 
-## Breaking Changes
+## Key Changes
 
-- v1 singleton-style client surface is removed.
-- v2 requires explicit `AudiusClient(configuration:)`.
-- responses are no longer silently swallowed on decode errors.
-- endpoint wrappers are organized by tag clients and generated from swagger.
+- New primary client: `AudiusClient(configuration:)`
+- New typed facade: `client.typed`
+- Legacy singleton retained only as deprecated bridge: `AudiusAPIClient.shared`
+- Raw fallback surface still available
 
-## New Entry Point
+## Recommended Migration Path
 
-```swift
-let client = AudiusClient(configuration: AudiusClientConfiguration(appName: "MyApp"))
-```
+1. Replace singleton usage with explicit `AudiusClient` construction.
+2. Migrate API calls from raw dictionary signatures to typed params:
+   - from: `client.users.getUser(pathParameters: ["id": ...])`
+   - to: `client.typed.users.getUser(.init(id: ...))`
+3. Move response parsing from ad-hoc JSON to typed models/envelopes.
+4. Keep raw APIs only for exceptional cases.
+5. Remove `AudiusAPIClient.shared` usage after migration.
 
-## Method Mapping Pattern
+## Legacy Shim Scope
 
-- old direct methods -> tag clients, e.g. `client.users.getUser(...)`
-- operation naming aligns to swagger `operationId`
+`AudiusAPIClient` in v2 provides only:
+
+- `AudiusAPIClient.shared`
+- `init(configuration:)`
+- `configure(_:)`
+- `client` (wrapped `AudiusClient`)
+
+No legacy endpoint aliases are reintroduced.
 
 ## Auth Migration
 
-- use system web auth (`ASWebAuthenticationSession`) in the host app
-- parse callback + validate state using `client.auth`
-- verify token with `client.auth.verifyToken(...)`
-- create/persist session via `client.auth.createSession(...)`
-
-## Write Migration
-
-- default to bearer-first execution
-- add optional proxy executor for endpoints that cannot complete with direct bearer behavior
-
-## Recommended Rollout
-
-1. Replace v1 client construction with `AudiusClient` configuration.
-2. Migrate read flows tag-by-tag.
-3. Migrate write flows with bearer token session.
-4. Add proxy fallback only for operations that fail bearer mode in production.
-5. Re-run tests against source swagger coverage.
+- Use system web auth (`ASWebAuthenticationSession`).
+- Parse and validate callback with `client.auth`.
+- Verify token, then persist session.
+- Use `.sessionBearer` auth mode for bearer-first writes.
