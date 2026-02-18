@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 require "json"
-require "time"
 require "yaml"
 
 DEFAULT_SWAGGER = "/Users/julianbaker/Downloads/swagger.yaml"
@@ -64,7 +63,6 @@ operations.sort_by! { |op| [op["tag"], op["path"], op["method"], op["operationId
 
 manifest = {
   "source_swagger" => swagger_path,
-  "generated_at" => Time.now.utc.iso8601,
   "operation_count" => operations.count,
   "operations" => operations
 }

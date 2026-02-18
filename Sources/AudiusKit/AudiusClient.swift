@@ -58,6 +58,7 @@ public final class AudiusClient: @unchecked Sendable {
   public let resolve: ResolveAPI
   public let wallet: WalletAPI
   public let dashboardWalletUsers: DashboardWalletUsersAPI
+  public let typed: AudiusTypedClient
   public let auth: AudiusAuthAPI
 
   private let core: AudiusCore
@@ -81,6 +82,7 @@ public final class AudiusClient: @unchecked Sendable {
     self.resolve = ResolveAPI(core: core)
     self.wallet = WalletAPI(core: core)
     self.dashboardWalletUsers = DashboardWalletUsersAPI(core: core)
+    self.typed = AudiusTypedClient(core: core)
     self.auth = AudiusAuthAPI(core: core, sessionStore: configuration.sessionStore)
   }
 

@@ -1,24 +1,19 @@
 # AudiusKit v2
 
-AudiusKit v2 is a clean-break Swift package for the Audius/Open Audio Protocol API, aligned to the OpenAPI source of truth at:
+AudiusKit v2 is a typed Swift SDK for the Audius/Open Audio Protocol API, generated from:
 
 `/Users/julianbaker/Downloads/swagger.yaml`
 
-## What v2 Includes
+## Highlights
 
-- 157 operation wrappers generated from the source swagger.
-- Tag-scoped API clients (`users`, `tracks`, `playlists`, `comments`, etc.).
-- Bearer-first write execution with optional proxy fallback interface.
-- iOS-ready OAuth helpers for Audius hosted login UI.
-- Session verification (`/v1/users/verify_token`) and session store abstractions.
+- Full operation coverage (`157`) with typed wrappers.
+- Typed domain models (`Track`, `User`, `Playlist`, `Comment`, `Coin`, etc.).
+- Generic response envelopes (`AudiusEnvelope`, `AudiusListEnvelope`, `AudiusOptionalEnvelope`).
+- Raw API escape hatch preserved.
+- Bearer-first write execution with optional proxy fallback.
+- OAuth/session helpers for iOS system auth.
 
-## Installation
-
-```swift
-.package(url: "https://github.com/your-org/AudiusKit.git", from: "2.0.0")
-```
-
-## Quick Start
+## Quick Start (Typed)
 
 ```swift
 import AudiusKit
@@ -31,57 +26,53 @@ let client = AudiusClient(
   )
 )
 
-let response = try await client.users.getUser(pathParameters: ["id": "123"])
-let payload = try response.decodeJSON()
+let user = try await client.typed.users.getUser(.init(id: "123"))
+print(user.data.name)
 ```
 
-## iOS Authentication (System Auth)
-
-AudiusKit does not render login UI. The host app launches Audius hosted auth in `ASWebAuthenticationSession`.
+## Raw Escape Hatch
 
 ```swift
-import AuthenticationServices
-import AudiusKit
-
-let state = client.auth.generateState()
-let oauthURL = try client.auth.buildOAuthURL(
-  request: AudiusOAuthRequest(
-    scope: .write,
-    apiKey: "YOUR_API_KEY",
-    redirectURI: "https://auth.myapp.com/audius/callback",
-    state: state,
-    responseMode: .query,
-    display: .fullScreen
-  )
-)
-
-let session = ASWebAuthenticationSession(
-  url: oauthURL,
-  callbackURLScheme: nil
-) { callbackURL, error in
-  guard let callbackURL else { return }
-  Task {
-    let callback = try client.auth.parseOAuthCallback(url: callbackURL, expectedState: state)
-    _ = try await client.auth.createSession(token: callback.token, scope: .write)
-  }
-}
-session.start()
+let raw = try await client.users.getUser(pathParameters: ["id": "123"])
+let json = try raw.decodeJSON()
 ```
 
-## Write Auth Strategy
+## iOS Auth
 
-- Default: direct bearer (`Authorization: Bearer <token>`).
-- Fallback: optional `WriteProxyExecutor` for operations that reject bearer in production.
-- No private keys are stored in the app when using proxy fallback mode.
+AudiusKit does not render login UI. Host apps launch Audius auth via `ASWebAuthenticationSession`, parse callback state/token with `client.auth`, then materialize a verified session using `client.auth.createSession(...)`.
 
-## API Surface
+## Optional Legacy Shim
 
-- Generated operation registry:
-  - `Sources/AudiusKit/Generated/AudiusOperations.generated.swift`
-- Tag API entrypoints:
-  - `Sources/AudiusKit/APIs/TagAPIs.swift`
+`AudiusAPIClient.shared` exists as a deprecated migration bridge.
 
-## Docs
+```swift
+let shared = AudiusAPIClient.shared
+let client = shared.client
+```
+
+Use `AudiusClient(configuration:)` for all new code.
+
+## Codegen
+
+Regenerate typed surface:
+
+```bash
+ruby Scripts/generate_typed_surface.rb /Users/julianbaker/Downloads/swagger.yaml
+```
+
+Regenerate operation manifest fixture:
+
+```bash
+ruby Scripts/generate_operation_manifest.rb /Users/julianbaker/Downloads/swagger.yaml Tests/AudiusKitTests/Fixtures/operation_manifest.json
+```
+
+Run codegen parity check:
+
+```bash
+Scripts/check_codegen.sh /Users/julianbaker/Downloads/swagger.yaml
+```
+
+## Documentation
 
 - `documentation/Getting-Started.md`
 - `documentation/Architecture.md`
