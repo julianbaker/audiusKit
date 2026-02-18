@@ -1,112 +1,91 @@
-# AudiusKit
+# AudiusKit v2
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+AudiusKit v2 is a clean-break Swift package for the Audius/Open Audio Protocol API, aligned to the OpenAPI source of truth at:
 
-A modern Swift package for integrating Audius music content into your iOS, macOS, tvOS, or watchOS app. 
+`/Users/julianbaker/Downloads/swagger.yaml`
 
-**AudiusKit is a 3rd party, community-maintained library.** It provides a type-safe, async/await-based read-only API for accessing and streaming public Audius tracks, user profiles, and playlists.
+## What v2 Includes
 
----
-
-## Features
-- Fetch trending tracks, user profiles, playlists, and more
-- Stream music directly from Audius
-- Async/await API for modern Swift concurrency
-- Built-in pagination and infinite scroll support
-- Robust error handling and caching
-- Designed for performance and thread safety
-- Supports iOS, macOS, tvOS, and watchOS
-- **Search for users and tracks by name or handle**
-
----
-
-## Why AudiusKit?
-AudiusKit makes it easy to build music discovery, playback, and analytics features into your Apple platform apps using the open Audius API. Whether you're building a music player, social app, or analytics dashboard, AudiusKit gives you the tools to get started quickly.
-
----
-
-## Supported Platforms & Requirements
-- **iOS:** 16.0+
-- **macOS:** 13.0+
-- **tvOS:** 16.0+
-- **watchOS:** 9.0+
-- **Swift:** 5.9+
-- **Xcode:** 15.0+
-
----
+- 157 operation wrappers generated from the source swagger.
+- Tag-scoped API clients (`users`, `tracks`, `playlists`, `comments`, etc.).
+- Bearer-first write execution with optional proxy fallback interface.
+- iOS-ready OAuth helpers for Audius hosted login UI.
+- Session verification (`/v1/users/verify_token`) and session store abstractions.
 
 ## Installation
 
-### Swift Package Manager (Recommended)
-1. In Xcode, go to **File > Add Packages...**
-2. Enter the repository URL:
-   ```
-   https://github.com/julianbaker/AudiusKit.git
-   ```
-3. Select the latest version and add `AudiusKit` to your target.
-
-Or add to your `Package.swift`:
 ```swift
-dependencies: [
-    .package(url: "https://github.com/julianbaker/AudiusKit.git", from: "1.0.0")
-]
+.package(url: "https://github.com/your-org/AudiusKit.git", from: "2.0.0")
 ```
 
----
-
 ## Quick Start
-
-See [Getting Started](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Getting-Started.md) for a full guide.
-
-## Minimal Initialization Example
-
-Initialize AudiusKit early in your app's lifecycle (e.g., in your App struct or AppDelegate):
 
 ```swift
 import AudiusKit
 
-@main
-struct MyApp: App {
-    @StateObject private var appState = AppState()
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .environmentObject(appState)
-        }
-    }
-}
+let client = AudiusClient(
+  configuration: AudiusClientConfiguration(
+    appName: "MyiOSApp",
+    auth: AudiusAuthConfiguration(mode: .sessionBearer),
+    sessionStore: KeychainSessionStore()
+  )
+)
 
-class AppState: ObservableObject {
-    @Published var isInitialized = false
-    @Published var initializationError: Error?
-    init() {
-        Task.detached(priority: .userInitiated) { [weak self] in
-            do {
-                // (Optional) Set your app's name for API attribution. Fallback is 'AudiusKit'.
-                AudiusAPIClient.configure(appName: "MyCoolApp")
-                try await AudiusAPIClient.initialize()
-                await MainActor.run { self?.isInitialized = true }
-            } catch {
-                await MainActor.run { self?.initializationError = error }
-            }
-        }
-    }
-}
+let response = try await client.users.getUser(pathParameters: ["id": "123"])
+let payload = try response.decodeJSON()
 ```
 
-> **Note:** If you do not call `AudiusAPIClient.configure(appName:)`, the default app name sent to the API will be `"AudiusKit"`.
+## iOS Authentication (System Auth)
 
----
+AudiusKit does not render login UI. The host app launches Audius hosted auth in `ASWebAuthenticationSession`.
 
-## Documentation
-- [Getting Started](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Getting-Started.md)
-- [API Reference](https://github.com/julianbaker/AudiusKit/blob/main/documentation/API-Reference.md)
-- [Usage Guide](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Usage-Guide.md)
-- [Troubleshooting](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Troubleshooting.md)
-- [Architecture](https://github.com/julianbaker/AudiusKit/blob/main/documentation/Architecture.md)
+```swift
+import AuthenticationServices
+import AudiusKit
 
+let state = client.auth.generateState()
+let oauthURL = try client.auth.buildOAuthURL(
+  request: AudiusOAuthRequest(
+    scope: .write,
+    apiKey: "YOUR_API_KEY",
+    redirectURI: "https://auth.myapp.com/audius/callback",
+    state: state,
+    responseMode: .query,
+    display: .fullScreen
+  )
+)
 
----
+let session = ASWebAuthenticationSession(
+  url: oauthURL,
+  callbackURLScheme: nil
+) { callbackURL, error in
+  guard let callbackURL else { return }
+  Task {
+    let callback = try client.auth.parseOAuthCallback(url: callbackURL, expectedState: state)
+    _ = try await client.auth.createSession(token: callback.token, scope: .write)
+  }
+}
+session.start()
+```
 
-## License
-MIT License — see [LICENSE](LICENSE) for details. 
+## Write Auth Strategy
+
+- Default: direct bearer (`Authorization: Bearer <token>`).
+- Fallback: optional `WriteProxyExecutor` for operations that reject bearer in production.
+- No private keys are stored in the app when using proxy fallback mode.
+
+## API Surface
+
+- Generated operation registry:
+  - `Sources/AudiusKit/Generated/AudiusOperations.generated.swift`
+- Tag API entrypoints:
+  - `Sources/AudiusKit/APIs/TagAPIs.swift`
+
+## Docs
+
+- `documentation/Getting-Started.md`
+- `documentation/Architecture.md`
+- `documentation/Usage-Guide.md`
+- `documentation/API-Reference.md`
+- `documentation/Troubleshooting.md`
+- `documentation/Migration-v1-to-v2.md`

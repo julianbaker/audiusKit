@@ -1,0 +1,1106 @@
+{
+  "source_swagger": "/Users/julianbaker/Downloads/swagger.yaml",
+  "generated_at": "2026-02-18T21:27:07Z",
+  "operation_count": 157,
+  "operations": [
+    {
+      "operationId": "Get Undisbursed Challenges",
+      "method": "GET",
+      "path": "challenges/undisbursed",
+      "tag": "challenges",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Undisbursed Challenges For User",
+      "method": "GET",
+      "path": "challenges/undisbursed/{user_id}",
+      "tag": "challenges",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Coins",
+      "method": "GET",
+      "path": "coins",
+      "tag": "coins",
+      "auth": "none"
+    },
+    {
+      "operationId": "Create Coin",
+      "method": "POST",
+      "path": "coins",
+      "tag": "coins",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Coin By Ticker",
+      "method": "GET",
+      "path": "coins/ticker/{ticker}",
+      "tag": "coins",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Volume Leaders",
+      "method": "GET",
+      "path": "coins/volume-leaders",
+      "tag": "coins",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Coin",
+      "method": "GET",
+      "path": "coins/{mint}",
+      "tag": "coins",
+      "auth": "none"
+    },
+    {
+      "operationId": "Update Coin",
+      "method": "POST",
+      "path": "coins/{mint}",
+      "tag": "coins",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Coin Insights",
+      "method": "GET",
+      "path": "coins/{mint}/insights",
+      "tag": "coins",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Coin Members",
+      "method": "GET",
+      "path": "coins/{mint}/members",
+      "tag": "coins",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Coin Members Count",
+      "method": "GET",
+      "path": "coins/{mint}/members/count",
+      "tag": "coins",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Coin Redeem Amount",
+      "method": "GET",
+      "path": "coins/{mint}/redeem",
+      "tag": "coins",
+      "auth": "none"
+    },
+    {
+      "operationId": "Claim Coin Reward",
+      "method": "POST",
+      "path": "coins/{mint}/redeem",
+      "tag": "coins",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Reward Code",
+      "method": "GET",
+      "path": "coins/{mint}/redeem/{code}",
+      "tag": "coins",
+      "auth": "none"
+    },
+    {
+      "operationId": "Claim Coin Reward Code",
+      "method": "POST",
+      "path": "coins/{mint}/redeem/{code}",
+      "tag": "coins",
+      "auth": "none"
+    },
+    {
+      "operationId": "Create Comment",
+      "method": "POST",
+      "path": "comments",
+      "tag": "comments",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get unclaimed comment ID",
+      "method": "GET",
+      "path": "comments/unclaimed_id",
+      "tag": "comments",
+      "auth": "none"
+    },
+    {
+      "operationId": "Delete Comment",
+      "method": "DELETE",
+      "path": "comments/{comment_id}",
+      "tag": "comments",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Comment",
+      "method": "GET",
+      "path": "comments/{comment_id}",
+      "tag": "comments",
+      "auth": "none"
+    },
+    {
+      "operationId": "Update Comment",
+      "method": "PUT",
+      "path": "comments/{comment_id}",
+      "tag": "comments",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Unpin Comment",
+      "method": "DELETE",
+      "path": "comments/{comment_id}/pin",
+      "tag": "comments",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Pin Comment",
+      "method": "POST",
+      "path": "comments/{comment_id}/pin",
+      "tag": "comments",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Unreact to Comment",
+      "method": "DELETE",
+      "path": "comments/{comment_id}/react",
+      "tag": "comments",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "React to Comment",
+      "method": "POST",
+      "path": "comments/{comment_id}/react",
+      "tag": "comments",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Comment Replies",
+      "method": "GET",
+      "path": "comments/{comment_id}/replies",
+      "tag": "comments",
+      "auth": "none"
+    },
+    {
+      "operationId": "Report Comment",
+      "method": "POST",
+      "path": "comments/{comment_id}/report",
+      "tag": "comments",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Bulk get dashboard wallet users",
+      "method": "GET",
+      "path": "dashboard_wallet_users",
+      "tag": "dashboardWalletUsers",
+      "auth": "none"
+    },
+    {
+      "operationId": "Create Developer App",
+      "method": "POST",
+      "path": "developer-apps",
+      "tag": "developerApps",
+      "auth": "none"
+    },
+    {
+      "operationId": "Delete Developer App",
+      "method": "DELETE",
+      "path": "developer-apps/{address}",
+      "tag": "developerApps",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Developer App",
+      "method": "GET",
+      "path": "developer-apps/{address}",
+      "tag": "developerApps",
+      "auth": "none"
+    },
+    {
+      "operationId": "Create Developer App Access Key",
+      "method": "POST",
+      "path": "developer-apps/{address}/access-keys",
+      "tag": "developerApps",
+      "auth": "none"
+    },
+    {
+      "operationId": "Deactivate Developer App Access Key",
+      "method": "POST",
+      "path": "developer-apps/{address}/access-keys/deactivate",
+      "tag": "developerApps",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Developer Apps",
+      "method": "GET",
+      "path": "users/{id}/developer-apps",
+      "tag": "developerApps",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Bulk Events",
+      "method": "GET",
+      "path": "events",
+      "tag": "events",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get All Events",
+      "method": "GET",
+      "path": "events/all",
+      "tag": "events",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Entity Events",
+      "method": "GET",
+      "path": "events/entity",
+      "tag": "events",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get unclaimed event ID",
+      "method": "GET",
+      "path": "events/unclaimed_id",
+      "tag": "events",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Best Selling",
+      "method": "GET",
+      "path": "explore/best-selling",
+      "tag": "explore",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Bulk Playlists",
+      "method": "GET",
+      "path": "playlists",
+      "tag": "playlists",
+      "auth": "none"
+    },
+    {
+      "operationId": "Create Playlist",
+      "method": "POST",
+      "path": "playlists",
+      "tag": "playlists",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Playlist By Handle and Slug",
+      "method": "GET",
+      "path": "playlists/by_permalink/{handle}/{slug}",
+      "tag": "playlists",
+      "auth": "none"
+    },
+    {
+      "operationId": "Search Playlists",
+      "method": "GET",
+      "path": "playlists/search",
+      "tag": "playlists",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Trending Playlists",
+      "method": "GET",
+      "path": "playlists/trending",
+      "tag": "playlists",
+      "auth": "none"
+    },
+    {
+      "operationId": "Delete Playlist",
+      "method": "DELETE",
+      "path": "playlists/{playlist_id}",
+      "tag": "playlists",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Playlist",
+      "method": "GET",
+      "path": "playlists/{playlist_id}",
+      "tag": "playlists",
+      "auth": "none"
+    },
+    {
+      "operationId": "Update Playlist",
+      "method": "PUT",
+      "path": "playlists/{playlist_id}",
+      "tag": "playlists",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Playlist Access Info",
+      "method": "GET",
+      "path": "playlists/{playlist_id}/access-info",
+      "tag": "playlists",
+      "auth": "none"
+    },
+    {
+      "operationId": "Unfavorite Playlist",
+      "method": "DELETE",
+      "path": "playlists/{playlist_id}/favorites",
+      "tag": "playlists",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Favorite Playlist",
+      "method": "POST",
+      "path": "playlists/{playlist_id}/favorites",
+      "tag": "playlists",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Unrepost Playlist",
+      "method": "DELETE",
+      "path": "playlists/{playlist_id}/reposts",
+      "tag": "playlists",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Repost Playlist",
+      "method": "POST",
+      "path": "playlists/{playlist_id}/reposts",
+      "tag": "playlists",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Share Playlist",
+      "method": "POST",
+      "path": "playlists/{playlist_id}/shares",
+      "tag": "playlists",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Playlist Tracks",
+      "method": "GET",
+      "path": "playlists/{playlist_id}/tracks",
+      "tag": "playlists",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Prizes",
+      "method": "GET",
+      "path": "prizes",
+      "tag": "prizes",
+      "auth": "none"
+    },
+    {
+      "operationId": "Claim Prize",
+      "method": "POST",
+      "path": "prizes/claim",
+      "tag": "prizes",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Wallet Prizes",
+      "method": "GET",
+      "path": "wallet/{wallet}/prizes",
+      "tag": "prizes",
+      "auth": "none"
+    },
+    {
+      "operationId": "Resolve",
+      "method": "GET",
+      "path": "resolve",
+      "tag": "resolve",
+      "auth": "none"
+    },
+    {
+      "operationId": "Claim Rewards",
+      "method": "POST",
+      "path": "rewards/claim",
+      "tag": "rewards",
+      "auth": "none"
+    },
+    {
+      "operationId": "Create Reward Code",
+      "method": "POST",
+      "path": "rewards/code",
+      "tag": "rewards",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Tips",
+      "method": "GET",
+      "path": "tips",
+      "tag": "tips",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Bulk Tracks",
+      "method": "GET",
+      "path": "tracks",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Create Track",
+      "method": "POST",
+      "path": "tracks",
+      "tag": "tracks",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Feeling Lucky Tracks",
+      "method": "GET",
+      "path": "tracks/feeling-lucky",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Inspect Tracks",
+      "method": "GET",
+      "path": "tracks/inspect",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Most Shared Tracks",
+      "method": "GET",
+      "path": "tracks/most-shared",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Tracks With Recent Comments",
+      "method": "GET",
+      "path": "tracks/recent-comments",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Recent Premium Tracks",
+      "method": "GET",
+      "path": "tracks/recent-premium",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Recommended Tracks",
+      "method": "GET",
+      "path": "tracks/recommended",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Recommended Tracks With Version",
+      "method": "GET",
+      "path": "tracks/recommended/{version}",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Search Tracks",
+      "method": "GET",
+      "path": "tracks/search",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Trending Tracks",
+      "method": "GET",
+      "path": "tracks/trending",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Trending Track IDs",
+      "method": "GET",
+      "path": "tracks/trending/ids",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Trending Tracks IDs With Version",
+      "method": "GET",
+      "path": "tracks/trending/ids/{version}",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Underground Trending Tracks",
+      "method": "GET",
+      "path": "tracks/trending/underground",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Underground Trending Tracks With Version",
+      "method": "GET",
+      "path": "tracks/trending/underground/{version}",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Trending Tracks With Version",
+      "method": "GET",
+      "path": "tracks/trending/{version}",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Trending USDC Purchase Tracks",
+      "method": "GET",
+      "path": "tracks/usdc-purchase",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Trending USDC Purchase Tracks With Version",
+      "method": "GET",
+      "path": "tracks/usdc-purchase/{version}",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Delete Track",
+      "method": "DELETE",
+      "path": "tracks/{track_id}",
+      "tag": "tracks",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Track",
+      "method": "GET",
+      "path": "tracks/{track_id}",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Update Track",
+      "method": "PUT",
+      "path": "tracks/{track_id}",
+      "tag": "tracks",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Track Access Info",
+      "method": "GET",
+      "path": "tracks/{track_id}/access-info",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Track Comment Count",
+      "method": "GET",
+      "path": "tracks/{track_id}/comment_count",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Track Comment Notification Setting",
+      "method": "GET",
+      "path": "tracks/{track_id}/comment_notification_setting",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Track Comments",
+      "method": "GET",
+      "path": "tracks/{track_id}/comments",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Download Track",
+      "method": "GET",
+      "path": "tracks/{track_id}/download",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Record Track Download",
+      "method": "POST",
+      "path": "tracks/{track_id}/downloads",
+      "tag": "tracks",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Unfavorite Track",
+      "method": "DELETE",
+      "path": "tracks/{track_id}/favorites",
+      "tag": "tracks",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Users From Favorites",
+      "method": "GET",
+      "path": "tracks/{track_id}/favorites",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Favorite Track",
+      "method": "POST",
+      "path": "tracks/{track_id}/favorites",
+      "tag": "tracks",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Inspect Track",
+      "method": "GET",
+      "path": "tracks/{track_id}/inspect",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Track Remixes",
+      "method": "GET",
+      "path": "tracks/{track_id}/remixes",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Track Remix Parents",
+      "method": "GET",
+      "path": "tracks/{track_id}/remixing",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Unrepost Track",
+      "method": "DELETE",
+      "path": "tracks/{track_id}/reposts",
+      "tag": "tracks",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Users From Reposts",
+      "method": "GET",
+      "path": "tracks/{track_id}/reposts",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Repost Track",
+      "method": "POST",
+      "path": "tracks/{track_id}/reposts",
+      "tag": "tracks",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Share Track",
+      "method": "POST",
+      "path": "tracks/{track_id}/shares",
+      "tag": "tracks",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Track Stems",
+      "method": "GET",
+      "path": "tracks/{track_id}/stems",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Stream Track",
+      "method": "GET",
+      "path": "tracks/{track_id}/stream",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Track Top Listeners",
+      "method": "GET",
+      "path": "tracks/{track_id}/top_listeners",
+      "tag": "tracks",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Bulk Users",
+      "method": "GET",
+      "path": "users",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Create User",
+      "method": "POST",
+      "path": "users",
+      "tag": "users",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get User IDs by Addresses",
+      "method": "GET",
+      "path": "users/address",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get User by Handle",
+      "method": "GET",
+      "path": "users/handle/{handle}",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Tracks by User Handle",
+      "method": "GET",
+      "path": "users/handle/{handle}/tracks",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get AI Attributed Tracks by User Handle",
+      "method": "GET",
+      "path": "users/handle/{handle}/tracks/ai_attributed",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Search Users",
+      "method": "GET",
+      "path": "users/search",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Verify ID Token",
+      "method": "GET",
+      "path": "users/verify_token",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get User",
+      "method": "GET",
+      "path": "users/{id}",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Update User",
+      "method": "PUT",
+      "path": "users/{id}",
+      "tag": "users",
+      "auth": "basic"
+    },
+    {
+      "operationId": "Get Albums by User",
+      "method": "GET",
+      "path": "users/{id}/albums",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Authorized Apps",
+      "method": "GET",
+      "path": "users/{id}/authorized_apps",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get User Balance History",
+      "method": "GET",
+      "path": "users/{id}/balance/history",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get User Challenges",
+      "method": "GET",
+      "path": "users/{id}/challenges",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get User Coins",
+      "method": "GET",
+      "path": "users/{id}/coins",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get User Coin",
+      "method": "GET",
+      "path": "users/{id}/coins/{mint}",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get User Collectibles",
+      "method": "GET",
+      "path": "users/{id}/collectibles",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get User Comments",
+      "method": "GET",
+      "path": "users/{id}/comments",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get connected wallets",
+      "method": "GET",
+      "path": "users/{id}/connected_wallets",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Favorites",
+      "method": "GET",
+      "path": "users/{id}/favorites",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Unfollow User",
+      "method": "DELETE",
+      "path": "users/{id}/follow",
+      "tag": "users",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Follow User",
+      "method": "POST",
+      "path": "users/{id}/follow",
+      "tag": "users",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Followers",
+      "method": "GET",
+      "path": "users/{id}/followers",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Following",
+      "method": "GET",
+      "path": "users/{id}/following",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Create Grant",
+      "method": "POST",
+      "path": "users/{id}/grants",
+      "tag": "users",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Approve Grant",
+      "method": "POST",
+      "path": "users/{id}/grants/approve",
+      "tag": "users",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Revoke Grant",
+      "method": "DELETE",
+      "path": "users/{id}/grants/{address}",
+      "tag": "users",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get User's Track History",
+      "method": "GET",
+      "path": "users/{id}/history/tracks",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get User Monthly Track Listens",
+      "method": "GET",
+      "path": "users/{id}/listen_counts_monthly",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Add Manager",
+      "method": "POST",
+      "path": "users/{id}/managers",
+      "tag": "users",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Remove Manager",
+      "method": "DELETE",
+      "path": "users/{id}/managers/{managerUserId}",
+      "tag": "users",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Unmute User",
+      "method": "DELETE",
+      "path": "users/{id}/muted",
+      "tag": "users",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Muted Users",
+      "method": "GET",
+      "path": "users/{id}/muted",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Mute User",
+      "method": "POST",
+      "path": "users/{id}/muted",
+      "tag": "users",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Mutual Followers",
+      "method": "GET",
+      "path": "users/{id}/mutuals",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Playlists by User",
+      "method": "GET",
+      "path": "users/{id}/playlists",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get purchasers",
+      "method": "GET",
+      "path": "users/{id}/purchasers",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Download Purchases as CSV",
+      "method": "GET",
+      "path": "users/{id}/purchases/download",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get User Recommended Tracks",
+      "method": "GET",
+      "path": "users/{id}/recommended-tracks",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Related Users",
+      "method": "GET",
+      "path": "users/{id}/related",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get remixers",
+      "method": "GET",
+      "path": "users/{id}/remixers",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Reposts",
+      "method": "GET",
+      "path": "users/{id}/reposts",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Sales Aggregate",
+      "method": "GET",
+      "path": "users/{id}/sales/aggregate",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Download Sales as CSV",
+      "method": "GET",
+      "path": "users/{id}/sales/download",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Download Sales as JSON",
+      "method": "GET",
+      "path": "users/{id}/sales/download/json",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Unsubscribe from User",
+      "method": "DELETE",
+      "path": "users/{id}/subscribers",
+      "tag": "users",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Subscribers",
+      "method": "GET",
+      "path": "users/{id}/subscribers",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Subscribe to User",
+      "method": "POST",
+      "path": "users/{id}/subscribers",
+      "tag": "users",
+      "auth": "basicOrBearer"
+    },
+    {
+      "operationId": "Get Supporters",
+      "method": "GET",
+      "path": "users/{id}/supporters",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Supported Users",
+      "method": "GET",
+      "path": "users/{id}/supporting",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Top Track Tags",
+      "method": "GET",
+      "path": "users/{id}/tags",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Tracks by User",
+      "method": "GET",
+      "path": "users/{id}/tracks",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Tracks Count by User",
+      "method": "GET",
+      "path": "users/{id}/tracks/count",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get User Tracks Remixed",
+      "method": "GET",
+      "path": "users/{id}/tracks/remixed",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Download USDC Withdrawals as CSV",
+      "method": "GET",
+      "path": "users/{id}/withdrawals/download",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get User Email Key",
+      "method": "GET",
+      "path": "users/{receiving_user_id}/emails/{grantor_user_id}/key",
+      "tag": "users",
+      "auth": "none"
+    },
+    {
+      "operationId": "Get Wallet Coins",
+      "method": "GET",
+      "path": "wallet/{walletId}/coins",
+      "tag": "wallet",
+      "auth": "none"
+    }
+  ]
+}
