@@ -342,6 +342,8 @@ class Generator
   end
 
   def generate_schema_type(type_name, schema)
+    return generate_top_listener_type if type_name == "TopListener"
+
     if schema["enum"]
       return generate_enum(type_name, schema)
     end
@@ -355,6 +357,20 @@ class Generator
     end
 
     generate_primitive_wrapper(type_name, schema)
+  end
+
+  def generate_top_listener_type
+    [
+      "public struct TopListener: Sendable, Codable, Equatable {",
+      "  public var count: Int?",
+      "  public var user: User?",
+      "",
+      "  public init(count: Int? = nil, user: User? = nil) {",
+      "    self.count = count",
+      "    self.user = user",
+      "  }",
+      "}",
+    ]
   end
 
   def generate_enum(type_name, schema)

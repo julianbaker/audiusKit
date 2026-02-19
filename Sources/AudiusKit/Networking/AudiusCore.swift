@@ -97,7 +97,7 @@ public actor AudiusCore {
         )
       }
 
-      if shouldUseProxyFallback(spec: spec, statusCode: httpResponse.statusCode),
+      if shouldUseProxyFallback(spec: spec, statusCode: httpResponse.statusCode, data: data),
         let proxy = configuration.writeProxy
       {
         let proxyRequest = AudiusProxyRequest(
@@ -119,10 +119,31 @@ public actor AudiusCore {
     }
   }
 
-  private func shouldUseProxyFallback(spec: AudiusOperationSpec, statusCode: Int) -> Bool {
+  private func shouldUseProxyFallback(spec: AudiusOperationSpec, statusCode: Int, data: Data) -> Bool {
     guard spec.method != .get else { return false }
     guard spec.auth != .none else { return false }
-    return [400, 401, 403].contains(statusCode)
+
+    if [401, 403].contains(statusCode) {
+      return true
+    }
+
+    guard statusCode == 400 else { return false }
+
+    let message = String(data: data, encoding: .utf8)?.lowercased() ?? ""
+    let authSignals = [
+      "authorization",
+      "unauthorized",
+      "forbidden",
+      "bearer",
+      "basic auth",
+      "signature",
+      "signed",
+      "api key",
+      "private key",
+      "token",
+    ]
+
+    return authSignals.contains { message.contains($0) }
   }
 
   private func encode(body: JSONValue) throws -> Data {
@@ -149,10 +170,19 @@ public actor AudiusCore {
       guard let value = values[key] else {
         throw AudiusError.missingPathParameter(key)
       }
-      path.replaceSubrange(fullRange, with: value)
+      path.replaceSubrange(fullRange, with: try encodePathSegment(value))
     }
 
     return path
+  }
+
+  private func encodePathSegment(_ value: String) throws -> String {
+    var allowed = CharacterSet.alphanumerics
+    allowed.insert(charactersIn: "-._~%")
+    guard let encoded = value.addingPercentEncoding(withAllowedCharacters: allowed) else {
+      throw AudiusError.invalidURL
+    }
+    return encoded
   }
 
   private func mapHTTPError(statusCode: Int, data: Data) -> AudiusError {

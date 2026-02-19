@@ -3003,10 +3003,12 @@ public struct TokenGate: Sendable, Codable, Equatable {
 }
 
 public struct TopListener: Sendable, Codable, Equatable {
-  public var data: [TopListener]?
+  public var count: Int?
+  public var user: User?
 
-  public init(data: [TopListener]? = nil) {
-    self.data = data
+  public init(count: Int? = nil, user: User? = nil) {
+    self.count = count
+    self.user = user
   }
 }
 

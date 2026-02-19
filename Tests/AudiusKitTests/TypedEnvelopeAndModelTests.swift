@@ -164,6 +164,53 @@ final class TypedEnvelopeAndModelTests: XCTestCase {
     XCTAssertNil(decoded.data.first?.user.splWallet)
   }
 
+  func testTopListenersDecodeLiveShape() throws {
+    let response = makeResponse(
+      body: #"""
+      {
+        "data": [
+          {
+            "count": 26,
+            "user": {
+              "album_count": 0,
+              "erc_wallet": "0xabc",
+              "followee_count": 44,
+              "follower_count": 2,
+              "handle": "patis01",
+              "id": "q7zWYXY",
+              "is_available": true,
+              "is_deactivated": false,
+              "is_verified": false,
+              "name": "Patis@",
+              "playlist_count": 1,
+              "repost_count": 9,
+              "spl_usdc_wallet": null,
+              "spl_wallet": null,
+              "supporter_count": 0,
+              "supporting_count": 3,
+              "total_audio_balance": 4,
+              "track_count": 0,
+              "verified_with_instagram": false,
+              "verified_with_tiktok": false,
+              "verified_with_twitter": false,
+              "wallet": "0xdef"
+            }
+          }
+        ]
+      }
+      """#
+    )
+
+    let decoded: AudiusListEnvelope<TopListener> = try response.decodeTyped(
+      AudiusListEnvelope<TopListener>.self,
+      operation: .getTrackTopListeners
+    )
+
+    XCTAssertEqual(decoded.data.count, 1)
+    XCTAssertEqual(decoded.data.first?.count, 26)
+    XCTAssertEqual(decoded.data.first?.user?.handle, "patis01")
+  }
+
   private func makeResponse(body: String) -> AudiusHTTPResponse<Data> {
     AudiusHTTPResponse(statusCode: 200, headers: [:], body: Data(body.utf8))
   }

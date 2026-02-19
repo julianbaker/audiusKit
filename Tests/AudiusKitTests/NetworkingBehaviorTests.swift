@@ -109,6 +109,86 @@ final class NetworkingBehaviorTests: XCTestCase {
     XCTAssertEqual(captured?.operation, .createComment)
     XCTAssertEqual(captured?.headers["Authorization"], "Bearer token-123")
   }
+
+  func testDoesNotProxyFallbackOnPlain400ValidationError() async throws {
+    let proxy = RecordingProxy()
+
+    StubURLProtocol.setHandler { request in
+      guard let url = request.url else { throw URLError(.badURL) }
+      if url.host == "discovery.test" {
+        let body = #"{"data":["https://api-unit.test"]}"#.data(using: .utf8) ?? Data()
+        return (Self.response(url: url, status: 200), body)
+      }
+
+      return (Self.response(url: url, status: 400), #"{"message":"invalid field value"}"#.data(using: .utf8) ?? Data())
+    }
+
+    let client = makeClient(authMode: .staticBearer("token-123"), writeProxy: proxy)
+    do {
+      _ = try await client.comments.createComment(body: .object(["text": .string("hello")]))
+      XCTFail("Expected validation error")
+    } catch let error as AudiusError {
+      guard case .validationError = error else {
+        XCTFail("Expected validationError but got \(error)")
+        return
+      }
+    }
+
+    let captured = await proxy.capturedRequest()
+    XCTAssertNil(captured, "Proxy should NOT be invoked for plain 400 without auth signal")
+  }
+
+  func testProxiesFallbackOn400WithAuthSignalInBody() async throws {
+    let proxy = RecordingProxy()
+
+    StubURLProtocol.setHandler { request in
+      guard let url = request.url else { throw URLError(.badURL) }
+      if url.host == "discovery.test" {
+        let body = #"{"data":["https://api-unit.test"]}"#.data(using: .utf8) ?? Data()
+        return (Self.response(url: url, status: 200), body)
+      }
+
+      return (Self.response(url: url, status: 400), #"{"message":"bearer token expired"}"#.data(using: .utf8) ?? Data())
+    }
+
+    let client = makeClient(authMode: .staticBearer("token-123"), writeProxy: proxy)
+    let response = try await client.comments.createComment(body: .object(["text": .string("hello")]))
+
+    XCTAssertEqual(response.statusCode, 200)
+    let captured = await proxy.capturedRequest()
+    XCTAssertNotNil(captured, "Proxy SHOULD be invoked for 400 with auth keyword in body")
+    XCTAssertEqual(captured?.operation, .createComment)
+  }
+
+  func testPathParametersArePercentEncoded() async throws {
+    let capturedRequest = RequestBox<URLRequest>()
+
+    StubURLProtocol.setHandler { request in
+      guard let url = request.url else { throw URLError(.badURL) }
+      if url.host == "discovery.test" {
+        let body = #"{"data":["https://api-unit.test"]}"#.data(using: .utf8) ?? Data()
+        return (Self.response(url: url, status: 200), body)
+      }
+
+      capturedRequest.set(request)
+      return (Self.response(url: url, status: 200), Data())
+    }
+
+    let client = makeClient(authMode: .none)
+    _ = try await client.tracks.getTrack(pathParameters: ["track_id": "abc/def?q=1&x=2"])
+
+    guard let request = capturedRequest.get(), let url = request.url else {
+      XCTFail("Expected API request to be captured")
+      return
+    }
+
+    let urlString = url.absoluteString
+    // The path portion is between the host and the query string
+    // Verify that special characters in the path parameter value are percent-encoded
+    XCTAssertTrue(urlString.contains("%3F"), "Question mark in path param should be percent-encoded as %3F")
+    XCTAssertTrue(urlString.contains("%26"), "Ampersand in path param should be percent-encoded as %26")
+    XCTAssertTrue(urlString.contains("%2F"), "Forward slash in path param should be percent-encoded as %2F")
+  }
 }
 
 private actor RecordingProxy: WriteProxyExecutor {
