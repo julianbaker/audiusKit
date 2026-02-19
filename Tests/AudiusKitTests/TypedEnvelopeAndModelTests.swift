@@ -103,6 +103,65 @@ final class TypedEnvelopeAndModelTests: XCTestCase {
     }
   }
 
+  func testTrackDecodesSimpleAccessShapeFromTrendingPayload() throws {
+    let response = makeResponse(
+      body: #"""
+      {
+        "data": [
+          {
+            "access": { "stream": true, "download": true },
+            "artwork": {},
+            "comment_count": 8,
+            "duration": 3971,
+            "favorite_count": 83,
+            "genre": "Electronic",
+            "id": "Vrp03Q",
+            "is_downloadable": false,
+            "is_original_available": false,
+            "permalink": "/migueldbj/clubkultur",
+            "play_count": 1875,
+            "repost_count": 62,
+            "title": "clubkultur — Session 04",
+            "user": {
+              "album_count": 0,
+              "erc_wallet": "0xabc",
+              "followee_count": 0,
+              "follower_count": 0,
+              "handle": "migueldbj",
+              "id": "naA9w",
+              "is_available": true,
+              "is_deactivated": false,
+              "is_verified": false,
+              "name": "Miguel",
+              "playlist_count": 0,
+              "repost_count": 0,
+              "spl_usdc_wallet": "spl-usdc",
+              "spl_wallet": "spl-wallet",
+              "supporter_count": 0,
+              "supporting_count": 0,
+              "total_audio_balance": 0,
+              "track_count": 1,
+              "verified_with_instagram": false,
+              "verified_with_tiktok": false,
+              "verified_with_twitter": false,
+              "wallet": "0xdef"
+            }
+          }
+        ]
+      }
+      """#
+    )
+
+    let decoded: AudiusListEnvelope<Track> = try response.decodeTyped(
+      AudiusListEnvelope<Track>.self,
+      operation: .getTrendingTracks
+    )
+
+    XCTAssertEqual(decoded.data.count, 1)
+    XCTAssertEqual(decoded.data.first?.access?.stream, true)
+    XCTAssertEqual(decoded.data.first?.access?.download, true)
+  }
+
   private func makeResponse(body: String) -> AudiusHTTPResponse<Data> {
     AudiusHTTPResponse(statusCode: 200, headers: [:], body: Data(body.utf8))
   }

@@ -419,6 +419,7 @@ class Generator
     fields = properties.keys.sort.map do |json_key|
       swift_name = unique_member_name(swift_member_name(json_key), used)
       swift_type = swift_type_for_schema(properties[json_key], required: required_set.include?(json_key))
+      swift_type = override_object_field_type(type_name: type_name, json_key: json_key, swift_type: swift_type)
       {
         json_key: json_key,
         swift_name: swift_name,
@@ -460,6 +461,14 @@ class Generator
 
     lines << "}"
     lines
+  end
+
+  def override_object_field_type(type_name:, json_key:, swift_type:)
+    # Spec drift: Track.access payload uses {stream, download} access shape in live /v1 track responses.
+    # Keep generator stable by binding Track.access to the Access schema instead of TrackAccessInfo.
+    return "Access?" if type_name == "Track" && json_key == "access"
+
+    swift_type
   end
 
   def generate_primitive_wrapper(type_name, schema)
