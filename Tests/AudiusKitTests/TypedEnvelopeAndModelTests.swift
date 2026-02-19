@@ -135,8 +135,8 @@ final class TypedEnvelopeAndModelTests: XCTestCase {
               "name": "Miguel",
               "playlist_count": 0,
               "repost_count": 0,
-              "spl_usdc_wallet": "spl-usdc",
-              "spl_wallet": "spl-wallet",
+              "spl_usdc_wallet": null,
+              "spl_wallet": null,
               "supporter_count": 0,
               "supporting_count": 0,
               "total_audio_balance": 0,
@@ -160,6 +160,8 @@ final class TypedEnvelopeAndModelTests: XCTestCase {
     XCTAssertEqual(decoded.data.count, 1)
     XCTAssertEqual(decoded.data.first?.access?.stream, true)
     XCTAssertEqual(decoded.data.first?.access?.download, true)
+    XCTAssertNil(decoded.data.first?.user.splUsdcWallet)
+    XCTAssertNil(decoded.data.first?.user.splWallet)
   }
 
   private func makeResponse(body: String) -> AudiusHTTPResponse<Data> {

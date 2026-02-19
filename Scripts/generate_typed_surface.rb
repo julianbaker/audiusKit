@@ -467,6 +467,9 @@ class Generator
     # Spec drift: Track.access payload uses {stream, download} access shape in live /v1 track responses.
     # Keep generator stable by binding Track.access to the Access schema instead of TrackAccessInfo.
     return "Access?" if type_name == "Track" && json_key == "access"
+    # Spec drift: live user payloads frequently contain null spl wallet fields.
+    return "String?" if type_name == "User" && json_key == "spl_usdc_wallet"
+    return "String?" if type_name == "User" && json_key == "spl_wallet"
 
     swift_type
   end
