@@ -87,15 +87,20 @@ final class TypedEnvelopeAndModelTests: XCTestCase {
     }
   }
 
-  func testListEnvelopeUsesLossyDecodingForInvalidElements() throws {
+  func testListEnvelopeDecodingFailsWhenElementIsInvalid() throws {
     let response = makeResponse(
       body: #"{"data":[{"id":"1","name":"first"},{"id":"2"},{"id":"3","name":"third"}]}"#
     )
-    let decoded: AudiusListEnvelope<LossyElement> = try response.decodeTyped(
-      AudiusListEnvelope<LossyElement>.self,
-      operation: .getTrendingTracks
-    )
-    XCTAssertEqual(decoded.data.map(\.id), ["1", "3"])
+
+    XCTAssertThrowsError(
+      try response.decodeTyped(AudiusListEnvelope<LossyElement>.self, operation: .getTrendingTracks)
+    ) { error in
+      guard case let AudiusError.decoding(message) = error else {
+        XCTFail("Expected decoding error but got \(error)")
+        return
+      }
+      XCTAssertTrue(message.contains("Operation getTrendingTracks"))
+    }
   }
 
   private func makeResponse(body: String) -> AudiusHTTPResponse<Data> {
