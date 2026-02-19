@@ -1979,6 +1979,48 @@ public struct Favorite: Sendable, Codable, Equatable {
     case favoriteType = "favorite_type"
     case userId = "user_id"
   }
+
+  public init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    createdAt = try container.decode(String.self, forKey: .createdAt)
+    favoriteItemId = try Self.decodeLossyString(container, forKey: .favoriteItemId)
+    favoriteType = try container.decode(String.self, forKey: .favoriteType)
+    userId = try Self.decodeLossyString(container, forKey: .userId)
+  }
+
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(createdAt, forKey: .createdAt)
+    try container.encode(favoriteItemId, forKey: .favoriteItemId)
+    try container.encode(favoriteType, forKey: .favoriteType)
+    try container.encode(userId, forKey: .userId)
+  }
+
+  private static func decodeLossyString(
+    _ container: KeyedDecodingContainer<CodingKeys>,
+    forKey key: CodingKeys
+  ) throws -> String {
+    if let stringValue = try? container.decode(String.self, forKey: key) {
+      return stringValue
+    }
+    if let intValue = try? container.decode(Int.self, forKey: key) {
+      return String(intValue)
+    }
+    if let doubleValue = try? container.decode(Double.self, forKey: key) {
+      if doubleValue.rounded() == doubleValue {
+        return String(Int(doubleValue))
+      }
+      return String(doubleValue)
+    }
+
+    throw DecodingError.typeMismatch(
+      String.self,
+      DecodingError.Context(
+        codingPath: container.codingPath + [key],
+        debugDescription: "Expected String/Int/Double for \(key.stringValue)"
+      )
+    )
+  }
 }
 
 public struct FavoritesResponse: Sendable, Codable, Equatable {

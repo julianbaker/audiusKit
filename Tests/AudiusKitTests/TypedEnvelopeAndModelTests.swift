@@ -211,6 +211,40 @@ final class TypedEnvelopeAndModelTests: XCTestCase {
     XCTAssertEqual(decoded.data.first?.user?.handle, "patis01")
   }
 
+  func testFavoritesDecodeMixedNumericAndStringIdentifiers() throws {
+    let response = makeResponse(
+      body: #"""
+      {
+        "data": [
+          {
+            "created_at": "2026-02-18T12:00:00Z",
+            "favorite_item_id": "123",
+            "favorite_type": "track",
+            "user_id": "42"
+          },
+          {
+            "created_at": "2026-02-18T12:05:00Z",
+            "favorite_item_id": 456,
+            "favorite_type": "playlist",
+            "user_id": 77
+          }
+        ]
+      }
+      """#
+    )
+
+    let decoded: AudiusListEnvelope<Favorite> = try response.decodeTyped(
+      AudiusListEnvelope<Favorite>.self,
+      operation: .getFavorites
+    )
+
+    XCTAssertEqual(decoded.data.count, 2)
+    XCTAssertEqual(decoded.data[0].favoriteItemId, "123")
+    XCTAssertEqual(decoded.data[0].userId, "42")
+    XCTAssertEqual(decoded.data[1].favoriteItemId, "456")
+    XCTAssertEqual(decoded.data[1].userId, "77")
+  }
+
   private func makeResponse(body: String) -> AudiusHTTPResponse<Data> {
     AudiusHTTPResponse(statusCode: 200, headers: [:], body: Data(body.utf8))
   }
