@@ -16,6 +16,20 @@ public struct AudiusListEnvelope<T: Codable & Sendable>: Sendable, Codable {
   public init(data: [T]) {
     self.data = data
   }
+
+  enum CodingKeys: String, CodingKey {
+    case data
+  }
+
+  public init(from decoder: any Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    if let strict = try? container.decode([T].self, forKey: .data) {
+      data = strict
+      return
+    }
+    let lossy = try container.decode([LossyDecodable<T>].self, forKey: .data)
+    data = lossy.compactMap(\.value)
+  }
 }
 
 extension AudiusListEnvelope: Equatable where T: Equatable {}
@@ -49,6 +63,14 @@ public struct AudiusWriteEnvelope<T: Codable & Sendable>: Sendable, Codable {
 }
 
 extension AudiusWriteEnvelope: Equatable where T: Equatable {}
+
+private struct LossyDecodable<T: Decodable>: Decodable {
+  let value: T?
+
+  init(from decoder: any Decoder) throws {
+    value = try? T(from: decoder)
+  }
+}
 
 public enum AudiusTypedValueCoder {
   private static let encoder = JSONEncoder()

@@ -5,18 +5,10 @@ public extension AudiusHTTPResponse where Body == Data {
     if body.isEmpty {
       return .null
     }
-    do {
-      return try JSONDecoder().decode(JSONValue.self, from: body)
-    } catch {
-      throw AudiusError.decoding(error.localizedDescription)
-    }
+    return try AudiusJSONCoding.decode(JSONValue.self, from: body)
   }
 
   func decode<T: Decodable>(_ type: T.Type) throws -> T {
-    do {
-      return try JSONDecoder().decode(T.self, from: body)
-    } catch {
-      throw AudiusError.decoding(error.localizedDescription)
-    }
+    try AudiusJSONCoding.decode(T.self, from: body)
   }
 }
